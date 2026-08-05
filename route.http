@@ -1,0 +1,44 @@
+@host = localhost:3000
+@protocol = http
+@apiVersion = v1
+@username = admin@example.com
+@password = admin123
+@token = Bearer admin-token-here
+@userId = 1
+@role = admin
+@auth = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJSd0JmS0BleGFtcGxlLmNvbSIsImlhdCI6MTc4NTg0NDMxNywiZXhwIjoxNzg2NDQ5MTE3fQ.cNxg5mrE5jjB8fVRUyxfEPgiPww_A5r_sRaJyKAxXHc
+@refresh = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJSd0JmS0BleGFtcGxlLmNvbSIsImlhdCI6MTc4NTg0NDMxNywiZXhwIjoxNzg2NDQ5MTE3fQ.5Zk4GoCF1rxM8WfCPc4arD5yvDL8qs0LvIKdNAq-kh4
+
+### register
+POST http://{{host}}/register
+Content-Type: application/json
+
+{
+"email":"drisa@gmail.com",
+"password":"test"
+}
+
+### login
+POST http://{{host}}/login
+Content-Type: application/json
+
+{
+"email":"RwBfK@example.com",
+"password":"secret"
+}
+
+
+### refresh
+POST http://{{host}}/refresh
+Content-Type: application/json
+
+{
+"refresh":"{{refresh}}"
+}
+
+
+### me
+GET http://{{host}}/me
+Content-Type: application/json
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJSd0JmS0BleGFtcGxlLmNvbSIsImlhdCI6MTc4NTg0NjYwOCwiZXhwIjoxNzg1ODQ3NTA4fQ.Zx5_uLRNihWdMxq57y7X2S69BoBFQyHpAduRCmi5x20
+

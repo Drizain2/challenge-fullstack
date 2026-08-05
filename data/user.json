@@ -1,0 +1,23 @@
+{
+    "users": [
+        {
+            "nom": "John",
+            "prenom": "Doe",
+            "email": "RwBfK@example.com",
+            "password": "secret"
+        },
+        {
+            "nom": "Traore",
+            "prenom": "Abdoulaye",
+            "email": "v2Q0v@example.com",
+            "password": "ablo225"
+        },
+        {
+            "nom":"Kone",
+            "prenom":"Kader",
+            "email":"h8KZV@example.com",
+            "password":"kader225"
+        }
+    ]
+  
+}
