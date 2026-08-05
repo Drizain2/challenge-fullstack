@@ -3,6 +3,7 @@ import express from "express";
 import { authController } from "./controllers/auth.controller.js";
 import { initDB } from "./repositories/user.repository.js";
 import { isAuthenticated } from "./middlewares/auth.middleware.js";
+import cors from "cors";
 
 dotenv.config();
 
@@ -10,6 +11,12 @@ const app = express();
 const port = 3000;
 
 app.use(express.json());
+app.use(cors({
+  origin: ["http://localhost:3000"], 
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
 
 async function startServer() {
   try {
