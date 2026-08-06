@@ -4,27 +4,46 @@ import { authController } from "./controllers/auth.controller.js";
 import { initDB } from "./repositories/user.repository.js";
 import { isAuthenticated } from "./middlewares/auth.middleware.js";
 import cors from "cors";
-
+import rateLimit from "express-rate-limit";
+import helmet from "helmet";
 dotenv.config();
 
 const app = express();
 const port = 3000;
 
-app.use(express.json());
-app.use(cors({
-  origin: ["http://localhost:3000"], 
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"]
-}));
+app.use(helmet(), express.json());
+app.use(
+  cors({
+    origin: ["http://localhost:3000"],
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }),
+);
+
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, 
+  max: 2, 
+  message: {
+    message: "Trop de tentatives, réessayez dans 15 minutes",
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 async function startServer() {
   try {
     await initDB(); // Crée la base de données et la table si absentes
     console.log("Base de données initialisée avec succès.");
-
-    app.post("/register", (req, res) => authController.register(req, res));
-    app.post("/login", (req, res) => authController.login(req, res));
+    app.get("/", (req, res) => {
+      res.send("Bienvenue sur l'API d'authentification !");
+    });
+    app.post("/register", authLimiter, (req, res) =>
+      authController.register(req, res),
+    );
+    app.post("/login", authLimiter, (req, res) =>
+      authController.login(req, res),
+    );
     app.post("/refresh", (req, res) => authController.refresh(req, res));
     app.get("/me", isAuthenticated, (req, res) => authController.me(req, res));
 
